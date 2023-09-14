@@ -4,6 +4,25 @@ def zScore(wordOne, wordTwo, string):
     import re
     import math 
 
+    # If a list, convert to string
+    if type(source) is list: 
+        source = ' '.join(source) 
+    # If not a string, raise error (elif)
+    elif not type(source) is str:
+        raise TypeError(f"Only strings and lists may be used with the miScore function. Source is {str(type(source))[1:-1]}")
+
+    # If wordOne equals word two, raise error
+    if wordOne == wordTwo:
+        raise ValueError("wordOne and wordTwo cannot be the same")
+    
+    # If wordOne or wordTwo are not in string, raise error
+    for x in [wordOne, wordTwo]:
+        if x not in source:
+            raise ValueError(f'Ensure that word "{x}" is in the source')
+    # Raise error if wordOne and wordTwo don't contain alphanumeric characters
+        elif x.isalpha() == False:
+            raise ValueError(f'Ensure that word "{x}" only contains alphanumeric characters')
+    
     # Remove special characters
     string = re.sub("[^\w\s]", "", string)
 
