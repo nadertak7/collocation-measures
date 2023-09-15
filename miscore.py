@@ -6,7 +6,7 @@ def miScore(wordOne, wordTwo, source):
 
     # If a list, convert to string
     if type(source) is list: 
-        source = ' '.join(source) 
+        source = ' '.join(str(x) for x in source)
     # If not a string, raise error (elif)
     elif not type(source) is str:
         raise TypeError(f"Only strings and lists may be used with the miScore function. Source is {str(type(source))[1:-1]}")
@@ -24,7 +24,14 @@ def miScore(wordOne, wordTwo, source):
             raise ValueError(f'Ensure that word "{x}" only contains alphanumeric characters')
 
     # Remove special characters
-    source = re.sub("[^\w\s]", "", source)
+    resubs = [  
+                ("[^\w\s]", ""),
+                (" +", " ")
+            ]
+    
+    for old, new in resubs:
+        source = re.sub(old, new, source)
+ 
 
     # Replace linespaces with a dash so that words on either side of the linespace are not identified by regex 
     source = source.replace("\n", " - ") 
