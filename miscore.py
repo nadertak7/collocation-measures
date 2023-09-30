@@ -1,15 +1,15 @@
-def miScore(wordOne, wordTwo, source):
+def miScore(wordOne, wordTwo, target):
 
     # Import modules
     import re
     import math 
 
     # If a list, convert to string
-    if type(source) is list: 
-        source = ' '.join(str(x) for x in source)
+    if type(target) is list: 
+        target = ' '.join(str(x) for x in target)
     # If not a string, raise error (elif)
-    elif not type(source) is str:
-        raise TypeError(f"Only strings and lists may be used with the miScore function. Source is {str(type(source))[1:-1]}")
+    elif not type(target) is str:
+        raise TypeError(f"Only strings and lists may be used with the miScore function. Source is {str(type(target))[1:-1]}")
 
     # If wordOne equals word two, raise error
     if wordOne == wordTwo:
@@ -17,8 +17,8 @@ def miScore(wordOne, wordTwo, source):
     
     # If wordOne or wordTwo are not in string, raise error
     for x in [wordOne, wordTwo]:
-        if x not in source:
-            raise ValueError(f'Ensure that word "{x}" is in the source')
+        if x not in target:
+            raise ValueError(f'Ensure that word "{x}" is in the target')
     # Raise error if wordOne and wordTwo don't contain alphanumeric characters
         elif x.isalpha() == False:
             raise ValueError(f'Ensure that word "{x}" only contains alphanumeric characters')
@@ -30,11 +30,11 @@ def miScore(wordOne, wordTwo, source):
             ]
     
     for old, new in resubs:
-        source = re.sub(old, new, source)
+        target = re.sub(old, new, target)
  
 
     # Replace linespaces with a dash so that words on either side of the linespace are not identified by regex 
-    source = source.replace("\n", " - ") 
+    target = target.replace("\n", " - ") 
                         
     # Initialise pattern to count collocations                
     contingencyApattern = rf'\b{wordOne}\s{wordTwo}\b'
@@ -43,18 +43,24 @@ def miScore(wordOne, wordTwo, source):
     contingencyDpattern = r'\b\w+\b'
 
     # Counts number of collocations
-    contingencyA = len(re.findall(contingencyApattern, source))
+    contingencyA = len(re.findall(contingencyApattern, target))
 
     # Counts instances of word one 
-    contingencyB = source.count(wordOne)
+    contingencyB = target.count(wordOne)
 
     # Counts instances of word two
-    contingencyC = source.count(wordTwo)
+    contingencyC = target.count(wordTwo)
 
     # Counts number of words
-    contingencyD = len(re.findall(contingencyDpattern, source))
+    contingencyD = len(re.findall(contingencyDpattern, target))
 
     # Perform mi score formula 
     miScore = math.log2((contingencyA / contingencyD) / ((contingencyB / contingencyD) * (contingencyC / contingencyD)))
 
     return miScore
+
+string = "dog woof cat meow"
+
+miscore = miScore("dog", "woof", string)
+
+print(miscore)
