@@ -58,9 +58,3 @@ def miScore(wordOne, wordTwo, target):
     miScore = math.log2((contingencyA / contingencyD) / ((contingencyB / contingencyD) * (contingencyC / contingencyD)))
 
     return miScore
-
-string = "dog woof cat meow"
-
-miscore = miScore("dog", "woof", string)
-
-print(miscore)
