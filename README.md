@@ -10,7 +10,7 @@ A future python package with simple collocation measure functions
 from collocationmeasure import collocationScore
 
 # Initialize the collocationScore object with word_one, word_two, and source text
-collocation = collocationScore(word_one, word_two, source_text)
+instance = collocationScore(word_one, word_two, source_text)
 ```
 
 - word_one (str): The first word for collocation comparison.
@@ -23,24 +23,23 @@ collocation = collocationScore(word_one, word_two, source_text)
 - T-score
 
 ```python
-t_score_result = collocation.t_score()
+t_score_result = instance.t_score()
 print("T-Score:", t_score_result)
 ```
 
 - MI-score
 
 ```python
-mi_score_result = collocation.mi_score()
+mi_score_result = instance.mi_score()
 print("MI Score:", mi_score_result)
 ```
 
 - Z-score 
 
 ```python
-z_score_result = collocation.z_score()
+z_score_result = instance.z_score()
 print("Z-Score:", z_score_result)
 ```
-
 
 ### 3. Error handling
 
