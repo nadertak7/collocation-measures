@@ -3,8 +3,27 @@ import re
 import math 
 
 class collocationScore:
+    """Calculates collocation scores for two given words within a source text.
+
+    Args:
+        word_one (str): The first word for collocation comparison.
+        word_two (str): The second word for collocation comparison.
+        source (str): The source text used for collocation analysis.
+        collocate_newlines (bool, optional): Flag determining whether to consider newlines for collocations. Default is False.
+
+    Methods:
+        t_score(): Calculate the t-score for the collocation of word_one and word_two.
+        mi_score(): Calculate the mutual information score for the collocation of word_one and word_two.
+        z_score(): Calculate the z-score for the collocation of word_one and word_two.
+
+    Raises:
+        TypeError: If the source is not a string or list.
+        ValueError: If word_one and word_two are the same or not present in the source.
+        ValueError: If word_one or word_two contains non-alphanumeric characters.
+        ValueError: If no collocations are found in the source text.
+    """  
+
     def __init__(self, word_one, word_two, source, collocate_newlines=False):
-        
         # If a list, convert to string
         if type(source) is list: 
             source = ' '.join(str(x) for x in source) 
@@ -66,13 +85,32 @@ class collocationScore:
         self.contingencyD = len(re.findall(contingencyDpattern, source))
 
     def t_score(self):
+        """Calculate the t-score for the collocation of word_one and word_two.
+
+        Returns:
+            float: t-score value.
+        """
+
         t_score = (self.contingencyA - (self.contingencyB * self.contingencyC) / self.contingencyD ) / math.sqrt(self.contingencyA)
         return t_score
 
     def mi_score(self):
+        """Calculate the mutual information score for the collocation of word_one and word_two.
+
+        Returns:
+            float: mutual information score value.
+        """
+
         mi_score = math.log2((self.contingencyA / self.contingencyD) / ((self.contingencyB / self.contingencyD) * (self.contingencyC / self.contingencyD)))
         return mi_score
     
     def z_score(self):
+        """Calculate the z-score for the collocation of word_one and word_two.
+
+        Returns:
+            float: z-score value.
+        """
+        
         z_score = (self.contingencyA  - (self.contingencyB * self.contingencyC) / self.contingencyD ) / ((math.sqrt(self.contingencyB * self.contingencyC)) / self.contingencyD)
         return z_score
+        
