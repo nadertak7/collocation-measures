@@ -7,7 +7,7 @@ A future python package with simple collocation measure functions
 
 ```python
 # Import the class
-from collocationmeasure import collocationScore
+from collocationmeasures import collocationScore
 
 # Initialize the collocationScore object with word_one, word_two, and source text
 instance = collocationScore(word_one, word_two, source_text)
