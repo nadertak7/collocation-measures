@@ -31,17 +31,21 @@ class collocationScore:
         elif not type(source) is str:
             raise TypeError(f"Only strings and lists may be used with the miScore function. Source is {str(type(source))[1:-1]}")
 
+        # Convert to lowercase 
+        for string_var in [word_one, word_two, source]:
+            string_var.lower()
+
         # If word_one equals word two, raise error
         if word_one == word_two:
             raise ValueError("word_one and word_two cannot be the same")
         
         # If word_one or word_two are not in source, raise error
-        for x in [word_one, word_two]:
-            if x not in source:
-                raise ValueError(f"Ensure that word '{x}' is in the source")
+        for word in [word_one, word_two]:
+            if word not in source:
+                raise ValueError(f"Ensure that word '{word}' is in the source")
         # Raise error if word_one and word_two don't contain alphabetical characters
-            elif x.isalpha() == False:
-                raise ValueError(f"Ensure that word '{x}' only contains alphabetical characters")
+            elif word.isalpha() == False:
+                raise ValueError(f"Ensure that word '{word}' only contains alphabetical characters")
         
         # Prevents escape characters from interfering with the output score (by doubling them)
         source = source.replace('\\', '\\\\')
@@ -90,7 +94,7 @@ class collocationScore:
         Returns:
             float: t-score value.
         """
-
+        
         t_score = (self.contingencyA - (self.contingencyB * self.contingencyC) / self.contingencyD ) / math.sqrt(self.contingencyA)
         return t_score
 
