@@ -32,8 +32,8 @@ class collocationScore:
             raise TypeError(f"Only strings and lists may be used with the miScore function. Source is {str(type(source))[1:-1]}")
 
         # Convert to lowercase 
-        for string_var in [word_one, word_two, source]:
-            string_var.lower()
+        word_one, word_two, source = [string_var.lower() for string_var in [word_one, word_two, source]]
+
 
         # If word_one equals word two, raise error
         if word_one == word_two:
@@ -64,8 +64,6 @@ class collocationScore:
             source = source.replace("\n", " - ") 
         else:
             source = source.replace("\n", " ")
-
-        self.source = source
                             
         # Initialise pattern to count collocations. There can be any number of spaces between word_one and word_two.              
         contingencyApattern = rf'\b{word_one}\s+{word_two}\b'
@@ -94,7 +92,7 @@ class collocationScore:
         Returns:
             float: t-score value.
         """
-        
+
         t_score = (self.contingencyA - (self.contingencyB * self.contingencyC) / self.contingencyD ) / math.sqrt(self.contingencyA)
         return t_score
 
@@ -114,7 +112,7 @@ class collocationScore:
         Returns:
             float: z-score value.
         """
-        
+
         z_score = (self.contingencyA  - (self.contingencyB * self.contingencyC) / self.contingencyD ) / ((math.sqrt(self.contingencyB * self.contingencyC)) / self.contingencyD)
         return z_score
         
