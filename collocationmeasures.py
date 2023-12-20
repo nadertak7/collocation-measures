@@ -1,6 +1,7 @@
 # Import modules
 import re
 import math 
+from typing import Union, Optional
 
 class collocationScore:
     """Calculates collocation scores for two given words within a source text.
@@ -23,7 +24,7 @@ class collocationScore:
         ValueError: If no collocations are found in the source text.
     """  
 
-    def __init__(self, word_one, word_two, source, collocate_newlines=False):
+    def __init__(self, word_one: str, word_two: str, source: Union[list, str], collocate_newlines: Optional[bool] = False) -> None:
         # If a list, convert to string
         if type(source) is list: 
             source = ' '.join(str(x) for x in source) 
@@ -86,7 +87,7 @@ class collocationScore:
         # Counts number of words
         self.contingencyD = len(re.findall(contingencyDpattern, source))
 
-    def t_score(self):
+    def t_score(self) -> float:
         """Calculate the t-score for the collocation of word_one and word_two.
 
         Returns:
@@ -96,7 +97,7 @@ class collocationScore:
         t_score = (self.contingencyA - (self.contingencyB * self.contingencyC) / self.contingencyD ) / math.sqrt(self.contingencyA)
         return t_score
 
-    def mi_score(self):
+    def mi_score(self) -> float:
         """Calculate the mutual information score for the collocation of word_one and word_two.
 
         Returns:
@@ -106,7 +107,7 @@ class collocationScore:
         mi_score = math.log2((self.contingencyA / self.contingencyD) / ((self.contingencyB / self.contingencyD) * (self.contingencyC / self.contingencyD)))
         return mi_score
     
-    def z_score(self):
+    def z_score(self) -> float:
         """Calculate the z-score for the collocation of word_one and word_two.
 
         Returns:
@@ -115,4 +116,3 @@ class collocationScore:
 
         z_score = (self.contingencyA  - (self.contingencyB * self.contingencyC) / self.contingencyD ) / ((math.sqrt(self.contingencyB * self.contingencyC)) / self.contingencyD)
         return z_score
-        
